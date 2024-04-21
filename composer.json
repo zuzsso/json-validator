@@ -1,11 +1,11 @@
 {
-    "name": "your/reponame",
+    "name": "zuzsso/json-validator",
     "description": "Common shareable functionality",
     "type": "library",
     "authors": [
         {
-            "name": "you",
-            "email": "you@yourserver.com"
+            "name": "Nico Santamaria",
+            "email": "ndsans@gmail.com"
         }
     ],
     "minimum-stability": "stable",
@@ -16,18 +16,18 @@
     },
     "autoload": {
         "psr-4": {
-            "YourProject\\": "src/"
+            "JsonValidator\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "YourProject\\Tests\\": "tests/"
+            "JsonValidator\\Tests\\": "tests/"
         }
     },
     "require": {
         "php-di/php-di": "^6.2",
         "ext-json": "*",
-        "zuzsso/di-manifest": "v1.0.0"
+        "zuzsso/di-manifest": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.2.3",
