@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d571c151311a5351f93e012f32112b5",
+    "content-hash": "b127895ba8700ed5ac2e0e2d15c78b2c",
     "packages": [
         {
             "name": "laravel/serializable-closure",
@@ -326,6 +326,54 @@
                 "issues": "https://github.com/zuzsso/di-manifest/issues"
             },
             "time": "2024-04-21T09:46:52+00:00"
+        },
+        {
+            "name": "zuzsso/math",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zuzsso/math.git",
+                "reference": "190989dcfceb13f0b864ae9370092452429dfd5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zuzsso/math/zipball/190989dcfceb13f0b864ae9370092452429dfd5c",
+                "reference": "190989dcfceb13f0b864ae9370092452429dfd5c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php-di/php-di": "^6.2",
+                "zuzsso/di-manifest": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "*",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^8.2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Math\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Math\\Tests\\": "tests/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Nico Santamaria",
+                    "email": "ndsans@gmail.com"
+                }
+            ],
+            "description": "Common shareable functionality",
+            "support": {
+                "source": "https://github.com/zuzsso/math/tree/v1.0.0",
+                "issues": "https://github.com/zuzsso/math/issues"
+            },
+            "time": "2024-04-21T18:34:52+00:00"
         }
     ],
     "packages-dev": [
