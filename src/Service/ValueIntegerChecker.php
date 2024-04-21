@@ -59,5 +59,4 @@ class ValueIntegerChecker implements CheckValueInteger
 
         return $this;
     }
-
 }

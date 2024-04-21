@@ -48,7 +48,6 @@ class ValueArrayChecker extends AbstractJsonChecker implements CheckValueArray
         array $payload,
         ArrayLengthRange $lengthRange
     ): CheckValueArray {
-
         $count = count($payload);
 
         $this->checkAllKeysAreNumericAndNoGaps($payload);

@@ -80,7 +80,6 @@ class KeyIntegerChecker extends AbstractJsonChecker implements CheckKeyInteger
         IntValueRange $range,
         bool $required = true
     ): self {
-
         $minValue = $range->getMin();
         $maxValue = $range->getMax();
 

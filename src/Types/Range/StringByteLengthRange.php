@@ -17,7 +17,6 @@ class StringByteLengthRange extends AbstractIntegerRange
         }
 
         if (($max !== null) && ($max < 1)) {
-
             throw new IncorrectParametrizationException("Values < 1 are not allowed as max count. Given: $max");
         }
 
