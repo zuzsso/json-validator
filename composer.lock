@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2b1abb85a1e19283dac346da0d4c5f1",
+    "content-hash": "6d571c151311a5351f93e012f32112b5",
     "packages": [
         {
             "name": "laravel/serializable-closure",
@@ -289,36 +289,29 @@
         },
         {
             "name": "zuzsso/di-manifest",
-            "version": "v1.0.0",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zuzsso/di-manifest.git",
-                "reference": "aca86ae0c0a5a4b2a475dd1d3526f7edec02caea"
+                "reference": "84c2bc9c70f85f69cd2a34fa6062ea85251fb9c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zuzsso/di-manifest/zipball/aca86ae0c0a5a4b2a475dd1d3526f7edec02caea",
-                "reference": "aca86ae0c0a5a4b2a475dd1d3526f7edec02caea",
+                "url": "https://api.github.com/repos/zuzsso/di-manifest/zipball/84c2bc9c70f85f69cd2a34fa6062ea85251fb9c5",
+                "reference": "84c2bc9c70f85f69cd2a34fa6062ea85251fb9c5",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
                 "php-di/php-di": "^6.2"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "*",
-                "phpmd/phpmd": "@stable",
-                "phpunit/phpunit": "^8.2.3"
+                "phpmd/phpmd": "@stable"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "DiManifest\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DiManifest\\Tests\\": "tests/"
                 }
             },
             "authors": [
@@ -329,10 +322,10 @@
             ],
             "description": "Common shareable functionality",
             "support": {
-                "source": "https://github.com/zuzsso/di-manifest/tree/v1.0.0",
+                "source": "https://github.com/zuzsso/di-manifest/tree/v1.0.5",
                 "issues": "https://github.com/zuzsso/di-manifest/issues"
             },
-            "time": "2024-04-19T23:35:40+00:00"
+            "time": "2024-04-21T09:46:52+00:00"
         }
     ],
     "packages-dev": [
@@ -4164,5 +4157,5 @@
     "platform-overrides": {
         "php": "7.4.28"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
