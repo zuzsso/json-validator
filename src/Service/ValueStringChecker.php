@@ -6,6 +6,7 @@ namespace JsonValidator\Service;
 
 use DateTimeImmutable;
 use JsonValidator\Exception\InvalidDateValueException;
+use JsonValidator\Exception\StringValueNotAnEmailException;
 use JsonValidator\Exception\ValueStringEmptyException;
 use JsonValidator\UseCase\CheckValueString;
 
@@ -52,5 +53,25 @@ class ValueStringChecker implements CheckValueString
         }
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isEmailAddress(?string $value, bool $required = true): CheckValueString
+    {
+        $sanitized = trim($value . '');
+
+        if ($required) {
+            $this->required($sanitized);
+        } elseif ($sanitized === '') {
+            return $this;
+        }
+
+        if (filter_var($sanitized, FILTER_VALIDATE_EMAIL)) {
+            return $this;
+        }
+
+        throw StringValueNotAnEmailException::constructForStandardMessage($sanitized);
     }
 }

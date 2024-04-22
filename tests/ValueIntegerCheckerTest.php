@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\JsonValidator;
+namespace JsonValidator\Tests;
 
-use PHPUnit\Framework\TestCase;
 use JsonValidator\Exception\IntegerComponentsDontRepresentDate;
 use JsonValidator\Service\ValueIntegerChecker;
 
-class ValueIntegerCheckerTest extends TestCase
+class ValueIntegerCheckerTest extends CustomTestCase
 {
     private ValueIntegerChecker $sut;
 

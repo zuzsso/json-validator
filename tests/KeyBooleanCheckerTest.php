@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\JsonValidator;
+namespace JsonValidator\Tests;
 
-use PHPUnit\Framework\TestCase;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\InvalidBoolValueException;
 use JsonValidator\Service\KeyBooleanChecker;
 use JsonValidator\Service\KeyPresenceChecker;
 
-class KeyBooleanCheckerTest extends TestCase
+class KeyBooleanCheckerTest extends CustomTestCase
 {
     private KeyBooleanChecker $sut;
 

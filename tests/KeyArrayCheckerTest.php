@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tests\JsonValidator;
+namespace JsonValidator\Tests;
 
-use PHPUnit\Framework\TestCase;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\IncorrectParametrizationException;
@@ -19,7 +18,7 @@ use JsonValidator\Service\KeyPresenceChecker;
 use JsonValidator\Service\ValueArrayChecker;
 use JsonValidator\Types\Range\ArrayLengthRange;
 
-class KeyArrayCheckerTest extends TestCase
+class KeyArrayCheckerTest extends CustomTestCase
 {
     private KeyArrayChecker $sut;
 

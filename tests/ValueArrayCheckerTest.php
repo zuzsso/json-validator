@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tests\JsonValidator;
+namespace JsonValidator\Tests;
 
-use PHPUnit\Framework\TestCase;
 use JsonValidator\Exception\IncorrectParametrizationException;
 use JsonValidator\Exception\RequiredArrayIsEmptyException;
 use JsonValidator\Exception\ValueArrayNotExactLengthException;
@@ -15,7 +14,7 @@ use JsonValidator\Exception\ValueTooSmallException;
 use JsonValidator\Service\ValueArrayChecker;
 use JsonValidator\Types\Range\ArrayLengthRange;
 
-class ValueArrayCheckerTest extends TestCase
+class ValueArrayCheckerTest extends CustomTestCase
 {
     private ValueArrayChecker $sut;
 
