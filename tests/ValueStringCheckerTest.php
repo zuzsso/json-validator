@@ -27,7 +27,6 @@ class ValueStringCheckerTest extends CustomTestCase
             ['blah', false, StringValueNotAnEmailException::class, $m2],
             ['blah', true, StringValueNotAnEmailException::class, $m2],
             ['', true, ValueStringEmptyException::class, $m1],
-
         ];
     }
 
@@ -55,15 +54,18 @@ class ValueStringCheckerTest extends CustomTestCase
             [null, false],
             ['', false],
             ['a@b.com', true],
-            ['a@b.com', false],
+            [' a@b.com', false],
         ];
     }
 
     /**
      * @dataProvider shouldAcceptEmailValidationDataProvider
+     * @throws StringValueNotAnEmailException
+     * @throws ValueStringEmptyException
      */
     public function testShouldAcceptEmailValidation(?string $value, bool $required): void
     {
-        $this->expectNotToPerformAssertions($value, $required);
+        $this->expectNotToPerformAssertions();
+        $this->sut->isEmailAddress($value, $required);
     }
 }

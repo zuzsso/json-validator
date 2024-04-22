@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Service;
 
+use JsonValidator\Exception\KeyNotEmailException;
 use Throwable;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryForbiddenException;
@@ -186,6 +187,32 @@ class KeyStringChecker extends AbstractJsonChecker implements CheckKeyString
             $this->checkValueString->dateTimeFormat($value, $dateFormat, $required);
         } catch (Throwable $t) {
             throw InvalidDateValueException::constructForStandardMessage($key, $dateFormat, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function emailFormat(string $key, array $payload, bool $required): CheckKeyString
+    {
+        if (!$required) {
+            try {
+                $this->checkPropertyPresence->forbidden($key, $payload);
+                return $this;
+            } catch (EntryForbiddenException $e) {
+            }
+        }
+
+        $this->required($key, $payload);
+
+        $value = trim((string)$payload[$key]);
+
+        try {
+            $this->checkValueString->isEmailAddress($value, $required);
+        } catch (Throwable $t) {
+            throw KeyNotEmailException::constructForStandardMessage($key, $value);
         }
 
         return $this;

@@ -8,6 +8,7 @@ use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\IncorrectParametrizationException;
 use JsonValidator\Exception\InvalidDateValueException;
+use JsonValidator\Exception\KeyNotEmailException;
 use JsonValidator\Exception\OptionalPropertyNotAStringException;
 use JsonValidator\Exception\StringIsNotAnUrlException;
 use JsonValidator\Exception\ValueNotAStringException;
@@ -51,7 +52,7 @@ interface CheckKeyString
      * @throws StringIsNotAnUrlException
      * @throws ValueNotAStringException
      */
-    public function urlFormat(string $key, array $payload): self;
+    public function urlFormat(string $key, array $payload, bool $required = true): self;
 
     /**
      * @throws IncorrectParametrizationException
@@ -60,7 +61,7 @@ interface CheckKeyString
      * @throws EntryMissingException
      * @throws ValueNotAStringException
      */
-    public function exactByteLength(string $key, array $payload, int $exactLength): self;
+    public function exactByteLength(string $key, array $payload, int $exactLength, bool $required = true): self;
 
     /**
      * @throws EntryEmptyException
@@ -68,5 +69,13 @@ interface CheckKeyString
      * @throws InvalidDateValueException
      * @throws ValueNotAStringException
      */
-    public function dateTimeFormat(string $key, array $payload, string $dateFormat): self;
+    public function dateTimeFormat(string $key, array $payload, string $dateFormat, bool $required = true): self;
+
+    /**
+     * @throws EntryEmptyException
+     * @throws EntryMissingException
+     * @throws KeyNotEmailException
+     * @throws ValueNotAStringException
+     */
+    public function emailFormat(string $key, array $payload, bool $required): self;
 }
