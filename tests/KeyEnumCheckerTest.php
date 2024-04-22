@@ -4,21 +4,29 @@ declare(strict_types=1);
 
 namespace JsonValidator\Tests;
 
+use DI\DependencyException;
+use DI\NotFoundException;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\JsonPayloadValidatorUnmanagedException;
 use JsonValidator\Exception\ValueNotInListException;
 use JsonValidator\Service\KeyEnumChecker;
-use JsonValidator\Service\KeyPresenceChecker;
+use JsonValidator\UseCase\CheckKeyPresence;
 
 class KeyEnumCheckerTest extends CustomTestCase
 {
     private KeyEnumChecker $sut;
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function setUp(): void
     {
         parent::setUp();
-        $this->sut = new KeyEnumChecker(new KeyPresenceChecker());
+        $this->sut = new KeyEnumChecker(
+            $this->diContainer->get(CheckKeyPresence::class)
+        );
     }
 
     public function shouldPassValidationDataProvider(): array

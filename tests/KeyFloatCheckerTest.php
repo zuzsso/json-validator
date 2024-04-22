@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JsonValidator\Tests;
 
+use DI\DependencyException;
+use DI\NotFoundException;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\IncorrectParametrizationException;
@@ -13,8 +15,8 @@ use JsonValidator\Exception\ValueNotEqualsToException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
 use JsonValidator\Service\KeyFloatChecker;
-use JsonValidator\Service\KeyPresenceChecker;
 use JsonValidator\Types\Range\FloatRange;
+use JsonValidator\UseCase\CheckKeyPresence;
 use Math\Numbers\Service\FloatsService;
 use Math\Numbers\UseCase\EqualFloats;
 
@@ -23,6 +25,10 @@ class KeyFloatCheckerTest extends CustomTestCase
     private KeyFloatChecker $sut;
     private EqualFloats $equalFloats;
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -30,8 +36,8 @@ class KeyFloatCheckerTest extends CustomTestCase
         $this->equalFloats = new FloatsService();
 
         $this->sut = new KeyFloatChecker(
-            new KeyPresenceChecker(),
-            new FloatsService()
+            $this->diContainer->get(CheckKeyPresence::class),
+            $this->diContainer->get(EqualFloats::class)
         );
     }
 

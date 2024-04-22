@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JsonValidator\Tests;
 
+use DI\DependencyException;
+use DI\NotFoundException;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\IncorrectParametrizationException;
@@ -12,18 +14,25 @@ use JsonValidator\Exception\ValueNotEqualsToException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
 use JsonValidator\Service\KeyIntegerChecker;
-use JsonValidator\Service\KeyPresenceChecker;
-use JsonValidator\Service\ValueIntegerChecker;
 use JsonValidator\Types\Range\IntValueRange;
+use JsonValidator\UseCase\CheckKeyPresence;
+use JsonValidator\UseCase\CheckValueInteger;
 
 class KeyIntegerCheckerTest extends CustomTestCase
 {
     private KeyIntegerChecker $sut;
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function setUp(): void
     {
         parent::setUp();
-        $this->sut = new KeyIntegerChecker(new KeyPresenceChecker(), new ValueIntegerChecker());
+        $this->sut = new KeyIntegerChecker(
+            $this->diContainer->get(CheckKeyPresence::class),
+            $this->diContainer->get(CheckValueInteger::class)
+        );
     }
 
     public function shouldFailRequiredDataProvider(): array

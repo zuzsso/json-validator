@@ -4,20 +4,28 @@ declare(strict_types=1);
 
 namespace JsonValidator\Tests;
 
+use DI\DependencyException;
+use DI\NotFoundException;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\InvalidJsonObjectValueException;
 use JsonValidator\Service\KeyJsonObjectChecker;
-use JsonValidator\Service\KeyPresenceChecker;
+use JsonValidator\UseCase\CheckKeyPresence;
 
 class KeyJsonObjectCheckerTest extends CustomTestCase
 {
     private KeyJsonObjectChecker $sut;
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function setUp(): void
     {
         parent::setUp();
-        $this->sut = new KeyJsonObjectChecker(new KeyPresenceChecker());
+        $this->sut = new KeyJsonObjectChecker(
+            $this->diContainer->get(CheckKeyPresence::class)
+        );
     }
 
     public function shouldFailRequiredDataProvider(): array

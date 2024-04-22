@@ -14,7 +14,6 @@ use JsonValidator\Exception\KeyNotEmailException;
 use JsonValidator\Exception\OptionalPropertyNotAStringException;
 use JsonValidator\Exception\StringIsNotAnUrlException;
 use JsonValidator\Exception\ValueNotAStringException;
-use JsonValidator\Exception\ValueStringEmptyException;
 use JsonValidator\Exception\ValueStringNotExactLengthException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;

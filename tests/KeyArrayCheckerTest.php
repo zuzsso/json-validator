@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JsonValidator\Tests;
 
+use DI\DependencyException;
+use DI\NotFoundException;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\IncorrectParametrizationException;
@@ -14,19 +16,26 @@ use JsonValidator\Exception\ValueNotAnArrayException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
 use JsonValidator\Service\KeyArrayChecker;
-use JsonValidator\Service\KeyPresenceChecker;
-use JsonValidator\Service\ValueArrayChecker;
 use JsonValidator\Types\Range\ArrayLengthRange;
+use JsonValidator\UseCase\CheckKeyPresence;
+use JsonValidator\UseCase\CheckValueArray;
 
 class KeyArrayCheckerTest extends CustomTestCase
 {
     private KeyArrayChecker $sut;
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->sut = new KeyArrayChecker(new KeyPresenceChecker(), new ValueArrayChecker());
+        $this->sut = new KeyArrayChecker(
+            $this->diContainer->get(CheckKeyPresence::class),
+            $this->diContainer->get(CheckValueArray::class)
+        );
     }
 
     public function shouldFailRequiredDataProvider(): array
