@@ -22,12 +22,25 @@ class ValueStringCheckerTest extends CustomTestCase
     {
         $m1 = 'Expected a string, but got null or empty string';
         $m2 = "The value 'blah' is meant to represent an email address, but it doesn't";
+        $m3 = "The value 'jdoe@machine(comment). example' is meant to represent an email address, but it doesn't";
+        $m4 = "The value 'first.(\")middle.last(\")@iana.org";
 
-        return [
-            ['blah', false, StringValueNotAnEmailException::class, $m2],
-            ['blah', true, StringValueNotAnEmailException::class, $m2],
+        $fixedTests = [
             ['', true, ValueStringEmptyException::class, $m1],
         ];
+
+        $variables = [true, false];
+
+        $varianTests = [];
+
+        foreach ($variables as $v) {
+            $varianTests[] = ['blah', $v, StringValueNotAnEmailException::class, $m2];
+            $varianTests[] = ['blah', $v, StringValueNotAnEmailException::class, $m2];
+            $varianTests[] = ['jdoe@machine(comment). example', $v, StringValueNotAnEmailException::class, $m3];
+            $varianTests[] = ['first.(")middle.last(")@iana.org', $v, StringValueNotAnEmailException::class, $m4];
+        }
+
+        return array_merge($fixedTests, $varianTests);
     }
 
     /**
@@ -50,12 +63,29 @@ class ValueStringCheckerTest extends CustomTestCase
 
     public function shouldAcceptEmailValidationDataProvider(): array
     {
-        return [
+        $fixedTests = [
             [null, false],
-            ['', false],
-            ['a@b.com', true],
-            [' a@b.com', false],
+            ['', false]
         ];
+
+        $variables = [true, false];
+
+        $variantTests = [];
+
+        foreach ($variables as $v) {
+            $variantTests[] = ['a@b.com', $v];
+            $variantTests[] = [' a@b.com', $v];
+            $variantTests[] = ['first."mid\dle"."last"@iana.org', $v];
+            $variantTests[] = ['bob@example.com', $v];
+            $variantTests[] = [
+                'first.last@x23456789012345678901234567890123456789012345678901234567890123.iana.org',
+                $v
+            ];
+            $variantTests[] = ['my+1@gmail.com', $v];
+            $variantTests[] = ['dclo@us.ibm.com', $v];
+        }
+
+        return array_merge($fixedTests, $variantTests);
     }
 
     /**
