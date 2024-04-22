@@ -4,29 +4,40 @@ declare(strict_types=1);
 
 namespace JsonValidator\Tests;
 
+use DI\DependencyException;
+use DI\NotFoundException;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\IncorrectParametrizationException;
 use JsonValidator\Exception\InvalidDateValueException;
+use JsonValidator\Exception\KeyNotEmailException;
 use JsonValidator\Exception\OptionalPropertyNotAStringException;
 use JsonValidator\Exception\StringIsNotAnUrlException;
 use JsonValidator\Exception\ValueNotAStringException;
+use JsonValidator\Exception\ValueStringEmptyException;
 use JsonValidator\Exception\ValueStringNotExactLengthException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
-use JsonValidator\Service\KeyPresenceChecker;
 use JsonValidator\Service\KeyStringChecker;
-use JsonValidator\Service\ValueStringChecker;
 use JsonValidator\Types\Range\StringByteLengthRange;
+use JsonValidator\UseCase\CheckKeyPresence;
+use JsonValidator\UseCase\CheckValueString;
 
 class KeyStringCheckerTest extends CustomTestCase
 {
     private KeyStringChecker $sut;
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function setUp(): void
     {
         parent::setUp();
-        $this->sut = new KeyStringChecker(new KeyPresenceChecker(), new ValueStringChecker());
+        $this->sut = new KeyStringChecker(
+            $this->diContainer->get(CheckKeyPresence::class),
+            $this->diContainer->get(CheckValueString::class)
+        );
     }
 
 
@@ -167,9 +178,12 @@ class KeyStringCheckerTest extends CustomTestCase
         $variable = [true, false];
 
         foreach ($variable as $v) {
-            $variableTests[] = [$key, [$key => 'not relevant'], null, null, $v, IncorrectParametrizationException::class, $mb];
-            $variableTests[] = [$key, [$key => 'not relevant'], 0, null, $v, IncorrectParametrizationException::class, $m9];
-            $variableTests[] = [$key, [$key => 'not relevant'], null, 0, $v, IncorrectParametrizationException::class, $ma];
+            $variableTests[] =
+                [$key, [$key => 'not relevant'], null, null, $v, IncorrectParametrizationException::class, $mb];
+            $variableTests[] =
+                [$key, [$key => 'not relevant'], 0, null, $v, IncorrectParametrizationException::class, $m9];
+            $variableTests[] =
+                [$key, [$key => 'not relevant'], null, 0, $v, IncorrectParametrizationException::class, $ma];
             $variableTests[] = [$key, [$key => ''], 2, 3, $v, EntryEmptyException::class, $m6];
             $variableTests[] = [$key, [$key => '    '], 2, 3, $v, EntryEmptyException::class, $m6];
             $variableTests[] = [$key, [$key => []], 2, 3, $v, EntryEmptyException::class, $m6];
@@ -545,5 +559,83 @@ class KeyStringCheckerTest extends CustomTestCase
     ): void {
         $this->sut->dateTimeFormat($key, $payload, $dateTimeFormat, $required);
         $this->expectNotToPerformAssertions();
+    }
+
+
+    public function shouldFailKeyEmailCheckerDataProvider(): array
+    {
+        $key = 'myKey';
+
+        $m1 = "Entry 'myKey' missing";
+        $m2 = "Entry 'myKey' empty";
+        $m3 = "The entry 'myKey' is not a string";
+        $m4 = "Entry 'myKey' empty";
+        $m5 = "The key 'myKey' is meant to be an email address, but it isn't: 'blah'";
+
+        $fixedTests = [
+            [$key, [], true, EntryMissingException::class, $m1],
+            [$key, [$key => null], true, EntryEmptyException::class, $m2],
+        ];
+
+        $variantTests = [];
+
+        $variables = [true, false];
+
+        foreach ($variables as $v) {
+            $variantTests[] = [$key, [$key => []], $v, EntryEmptyException::class, $m2];
+            $variantTests[] = [$key, [$key => [[]]], $v, ValueNotAStringException::class, $m3];
+            $variantTests[] = [$key, [$key => true], $v, ValueNotAStringException::class, $m3];
+            $variantTests[] = [$key, [$key => false], $v, ValueNotAStringException::class, $m3];
+            $variantTests[] = [$key, [$key => 1], $v, ValueNotAStringException::class, $m3];
+            $variantTests[] = [$key, [$key => 1.1], $v, ValueNotAStringException::class, $m3];
+            $variantTests[] = [$key, [$key => ""], $v, EntryEmptyException::class, $m4];
+            $variantTests[] = [$key, [$key => "blah"], $v, KeyNotEmailException::class, $m5];
+        }
+
+        return array_merge($fixedTests, $variantTests);
+    }
+
+    /**
+     * @dataProvider shouldFailKeyEmailCheckerDataProvider
+     * @throws EntryEmptyException
+     * @throws EntryMissingException
+     * @throws ValueNotAStringException
+     * @throws KeyNotEmailException
+     */
+    public function testShouldFailKeyEmailChecker(
+        string $key,
+        array $payload,
+        bool $required,
+        string $expectedException,
+        string $expectedExceptionMessage
+    ): void {
+        $this->expectException($expectedException);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+
+        $this->sut->emailFormat($key, $payload, $required);
+    }
+
+    public function shouldPassKeyEmailCheckerDataProvider(): array
+    {
+        $key = 'myKey';
+        return [
+            [$key, [], false],
+            [$key, [$key => null], false],
+            [$key, [$key => 'a@b.com'], true],
+            [$key, [$key => 'a@b.com'], false],
+        ];
+    }
+
+    /**
+     * @dataProvider shouldPassKeyEmailCheckerDataProvider
+     * @throws EntryEmptyException
+     * @throws EntryMissingException
+     * @throws KeyNotEmailException
+     * @throws ValueNotAStringException
+     */
+    public function testShouldPassKeyEmailChecker(string $key, array $payload, bool $required): void
+    {
+        $this->expectNotToPerformAssertions();
+        $this->sut->emailFormat($key, $payload, $required);
     }
 }
