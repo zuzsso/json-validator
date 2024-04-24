@@ -88,19 +88,19 @@ class KeyStringChecker extends AbstractJsonChecker implements CheckKeyString
 
         $this->required($key, $payload);
 
+        $maximumLength = $byteLengthRange->getMax();
+        $minimumLength = $byteLengthRange->getMin();
+
         $trim = trim($payload[$key]);
 
         $length = strlen($trim);
 
-        $maximumLength = $byteLengthRange->getMax();
-        $minimumLength = $byteLengthRange->getMin();
-
-        if (($minimumLength !== null) && ($length < $minimumLength)) {
-            throw ValueTooSmallException::constructForStringLength($key, $minimumLength, $length);
-        }
-
-        if ($maximumLength !== null && ($length > $maximumLength)) {
+        try {
+            $this->checkValueString->byteLengthRange($trim, $byteLengthRange);
+        } catch (ValueTooBigException $e) {
             throw ValueTooBigException::constructForStringLength($key, $maximumLength, $length);
+        } catch (ValueTooSmallException $e) {
+            throw ValueTooSmallException::constructForStringLength($key, $minimumLength, $length);
         }
 
         return $this;

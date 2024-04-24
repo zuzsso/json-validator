@@ -8,6 +8,9 @@ use DateTimeImmutable;
 use JsonValidator\Exception\InvalidDateValueException;
 use JsonValidator\Exception\StringValueNotAnEmailException;
 use JsonValidator\Exception\ValueStringEmptyException;
+use JsonValidator\Exception\ValueTooBigException;
+use JsonValidator\Exception\ValueTooSmallException;
+use JsonValidator\Types\Range\StringByteLengthRange;
 use JsonValidator\UseCase\CheckValueString;
 
 class ValueStringChecker implements CheckValueString
@@ -73,5 +76,28 @@ class ValueStringChecker implements CheckValueString
         }
 
         throw StringValueNotAnEmailException::constructForStandardMessage($sanitized);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function byteLengthRange(string $value, StringByteLengthRange $byteLengthRange): CheckValueString
+    {
+        $aux = trim($value);
+
+        $length = strlen($aux);
+
+        $maximumLength = $byteLengthRange->getMax();
+        $minimumLength = $byteLengthRange->getMin();
+
+        if (($minimumLength !== null) && ($length < $minimumLength)) {
+            throw ValueTooSmallException::constructForValueStringByteLength($minimumLength, $length);
+        }
+
+        if ($maximumLength !== null && ($length > $maximumLength)) {
+            throw ValueTooBigException::constructForValueStringByteLength($maximumLength, $length);
+        }
+
+        return $this;
     }
 }

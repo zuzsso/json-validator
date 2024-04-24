@@ -40,6 +40,13 @@ class ValueTooSmallException extends AbstractMalformedRequestBody
         return new self("Value is meant to be an array of minimum length of $expectedLength, but it is $actualLength");
     }
 
+    public static function constructForValueStringByteLength(int $expectedByteLength, int $actualByteLength): self
+    {
+        return new self (
+            "Value is meant to be a string of at least $expectedByteLength bytes, but it is $actualByteLength"
+        );
+    }
+
     public function getErrorCode(): string
     {
         return 'expectedMinValue';

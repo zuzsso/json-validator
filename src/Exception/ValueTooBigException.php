@@ -38,6 +38,13 @@ class ValueTooBigException extends AbstractMalformedRequestBody
         return new self("Value is meant to be an array of maximum length of $expectedLength, but it is $actualLength");
     }
 
+    public static function constructForValueStringByteLength(int $expectedByteLength, int $actualByteLength): self
+    {
+        return new self (
+            "Value is meant to be a string of $expectedByteLength bytes max, but it is $actualByteLength"
+        );
+    }
+
     public function getErrorCode(): string
     {
         return 'expectedMaxValue';

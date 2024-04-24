@@ -8,6 +8,9 @@ use JsonValidator\Exception\InvalidDateValueException;
 use JsonValidator\Exception\OptionalValueNotAStringException;
 use JsonValidator\Exception\StringValueNotAnEmailException;
 use JsonValidator\Exception\ValueStringEmptyException;
+use JsonValidator\Exception\ValueTooBigException;
+use JsonValidator\Exception\ValueTooSmallException;
+use JsonValidator\Types\Range\StringByteLengthRange;
 
 interface CheckValueString
 {
@@ -28,4 +31,10 @@ interface CheckValueString
      * @throws ValueStringEmptyException
      */
     public function isEmailAddress(?string $value, bool $required = true): self;
+
+    /**
+     * @throws ValueTooBigException
+     * @throws ValueTooSmallException
+     */
+    public function byteLengthRange(string $value, StringByteLengthRange $byteLengthRange): self;
 }
