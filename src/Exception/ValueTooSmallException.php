@@ -42,7 +42,7 @@ class ValueTooSmallException extends AbstractMalformedRequestBody
 
     public static function constructForValueStringByteLength(int $expectedByteLength, int $actualByteLength): self
     {
-        return new self (
+        return new self(
             "Value is meant to be a string of at least $expectedByteLength bytes, but it is $actualByteLength"
         );
     }

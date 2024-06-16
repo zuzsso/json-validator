@@ -113,6 +113,50 @@ class KeyArrayChecker extends AbstractJsonChecker implements CheckKeyArray
     /**
      * @inheritDoc
      */
+    public function keyArrayOfString(string $key, array $payload, bool $required = true): CheckKeyArray
+    {
+        if ($required === false) {
+            try {
+                $this->checkPropertyPresence->forbidden($key, $payload);
+                return $this;
+            } catch (EntryForbiddenException $e) {
+            }
+        }
+
+        $this->requiredKey($key, $payload);
+
+        $arrayElements = $payload[$key];
+
+        $this->checkValueArray->arrayOfString($arrayElements, $required);
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function keyArrayOfInteger(string $key, array $payload, bool $required = true): CheckKeyArray
+    {
+        if ($required === false) {
+            try {
+                $this->checkPropertyPresence->forbidden($key, $payload);
+                return $this;
+            } catch (EntryForbiddenException $e) {
+            }
+        }
+
+        $this->requiredKey($key, $payload);
+
+        $arrayElements = $payload[$key];
+
+        $this->checkValueArray->arrayOfInteger($arrayElements, $required);
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function keyArrayOfExactLength(string $key, array $payload, int $expectedLength, bool $required = true): self
     {
         if (!$required) {

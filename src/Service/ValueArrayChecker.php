@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace JsonValidator\Service;
 
 use JsonValidator\Exception\IncorrectParametrizationException;
+use JsonValidator\Exception\InvalidIntegerValueException;
 use JsonValidator\Exception\RequiredArrayIsEmptyException;
 use JsonValidator\Exception\ValueArrayNotExactLengthException;
 use JsonValidator\Exception\ValueNotAJsonObjectException;
+use JsonValidator\Exception\ValueNotAStringException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
 use JsonValidator\Types\Range\ArrayLengthRange;
@@ -35,6 +37,58 @@ class ValueArrayChecker extends AbstractJsonChecker implements CheckValueArray
         foreach ($arrayElements as $i => $r) {
             if (!is_array($r)) {
                 throw ValueNotAJsonObjectException::constructForStandardMessage((string)$i);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function arrayOfString(array $arrayElements, bool $required = true): CheckValueArray
+    {
+        $count = count($arrayElements);
+
+        if ($count === 0) {
+            if ($required === false) {
+                return $this;
+            }
+
+            throw RequiredArrayIsEmptyException::constructForStandardMessage();
+        }
+
+        $this->checkAllKeysAreNumericAndNoGaps($arrayElements);
+
+        foreach ($arrayElements as $i => $r) {
+            if (!is_string($r)) {
+                throw ValueNotAStringException::constructForStandardMessage($i);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function arrayOfInteger(array $arrayElements, bool $required = true): CheckValueArray
+    {
+        $count = count($arrayElements);
+
+        if ($count === 0) {
+            if ($required === false) {
+                return $this;
+            }
+
+            throw RequiredArrayIsEmptyException::constructForStandardMessage();
+        }
+
+        $this->checkAllKeysAreNumericAndNoGaps($arrayElements);
+
+        foreach ($arrayElements as $i => $r) {
+            if (!is_string($r)) {
+                throw InvalidIntegerValueException::constructForStandardMessage($i);
             }
         }
 
