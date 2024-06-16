@@ -62,7 +62,7 @@ class ValueArrayChecker extends AbstractJsonChecker implements CheckValueArray
 
         foreach ($arrayElements as $i => $r) {
             if (!is_string($r)) {
-                throw ValueNotAStringException::constructForStandardMessage($i);
+                throw ValueNotAStringException::constructForStandardMessage((string)$i);
             }
         }
 
@@ -88,7 +88,7 @@ class ValueArrayChecker extends AbstractJsonChecker implements CheckValueArray
 
         foreach ($arrayElements as $i => $r) {
             if (!is_string($r)) {
-                throw InvalidIntegerValueException::constructForStandardMessage($i);
+                throw InvalidIntegerValueException::constructForStandardMessage((string)$i);
             }
         }
 
