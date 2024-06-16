@@ -87,7 +87,7 @@ class ValueArrayChecker extends AbstractJsonChecker implements CheckValueArray
         $this->checkAllKeysAreNumericAndNoGaps($arrayElements);
 
         foreach ($arrayElements as $i => $r) {
-            if (!is_string($r)) {
+            if (!is_int($r)) {
                 throw InvalidIntegerValueException::constructForStandardMessage((string)$i);
             }
         }
