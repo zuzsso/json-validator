@@ -2,3 +2,4 @@
 /.phpunit.result.cache
 /bash_scripts/.php-cs-fixer.cache
 /.idea
+/.php-cs-fixer.cache
