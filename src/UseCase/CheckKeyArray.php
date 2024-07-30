@@ -23,8 +23,8 @@ interface CheckKeyArray
     /**
      * @throws EntryEmptyException
      * @throws EntryMissingException
-     * @throws ValueNotAnArrayException
      * @throws RequiredArrayIsEmptyException
+     * @throws ValueNotAnArrayException
      */
     public function requiredKey(string $key, array $payload): self;
 
@@ -38,8 +38,8 @@ interface CheckKeyArray
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
-     * @throws ValueNotAJsonObjectException
      * @throws ValueNotAnArrayException
+     * @throws ValueNotAJsonObjectException
      */
     public function keyArrayOfJsonObjects(string $key, array $payload, bool $required = true): self;
 
@@ -49,7 +49,6 @@ interface CheckKeyArray
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
      * @throws ValueNotAnArrayException
-     * @throws IncorrectParametrizationException
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      */
@@ -63,10 +62,10 @@ interface CheckKeyArray
     /**
      * @throws EntryEmptyException
      * @throws EntryMissingException
-     * @throws IncorrectParametrizationException
      * @throws RequiredArrayIsEmptyException
      * @throws ValueArrayNotExactLengthException
      * @throws ValueNotAnArrayException
+     * @throws IncorrectParametrizationException
      */
     public function keyArrayOfExactLength(
         string $key,

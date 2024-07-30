@@ -41,7 +41,6 @@ interface CheckValueArray
     /**
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
-     * @throws IncorrectParametrizationException
      * @throws ValueNotAnArrayException
      */
     public function arrayOfLengthRange(
