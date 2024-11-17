@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class EntryMissingException extends AbstractMalformedRequestBody
+class EntryMissingException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForKeyNameMissing(string $key): self
     {

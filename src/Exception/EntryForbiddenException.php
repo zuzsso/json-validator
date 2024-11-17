@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class EntryForbiddenException extends AbstractMalformedRequestBody
+class EntryForbiddenException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForKeyNameForbidden(string $key): self
     {

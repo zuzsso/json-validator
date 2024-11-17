@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class IntegerComponentsDontRepresentDate extends AbstractMalformedRequestBody
+class IntegerComponentsDontRepresentDate extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(int $year, int $month, int $day): self
     {

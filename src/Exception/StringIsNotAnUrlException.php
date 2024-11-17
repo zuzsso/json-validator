@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class StringIsNotAnUrlException extends AbstractMalformedRequestBody
+class StringIsNotAnUrlException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $url): self
     {

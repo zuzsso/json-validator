@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class ValueNotAFloatException extends AbstractMalformedRequestBody
+class ValueNotAFloatException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $key, string $value): self
     {

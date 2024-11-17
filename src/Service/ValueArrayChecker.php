@@ -8,7 +8,7 @@ use JsonValidator\Exception\IncorrectParametrizationException;
 use JsonValidator\Exception\InvalidIntegerValueException;
 use JsonValidator\Exception\RequiredArrayIsEmptyException;
 use JsonValidator\Exception\ValueArrayNotExactLengthException;
-use JsonValidator\Exception\ValueNotAJsonObjectException;
+use JsonValidator\Exception\ValueNotAJsonObjectExceptionStructure;
 use JsonValidator\Exception\ValueNotAStringException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
@@ -36,7 +36,7 @@ class ValueArrayChecker extends AbstractJsonChecker implements CheckValueArray
 
         foreach ($arrayElements as $i => $r) {
             if (!is_array($r)) {
-                throw ValueNotAJsonObjectException::constructForStandardMessage((string)$i);
+                throw ValueNotAJsonObjectExceptionStructure::constructForStandardMessage((string)$i);
             }
         }
 

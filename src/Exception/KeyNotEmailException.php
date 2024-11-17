@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class KeyNotEmailException extends AbstractMalformedRequestBody
+class KeyNotEmailException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $key, ?string $value)
     {

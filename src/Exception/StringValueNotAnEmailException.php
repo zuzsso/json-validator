@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class StringValueNotAnEmailException extends AbstractMalformedRequestBody
+class StringValueNotAnEmailException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $value): self
     {

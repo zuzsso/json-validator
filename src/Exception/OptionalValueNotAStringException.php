@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class OptionalValueNotAStringException extends AbstractMalformedRequestBody
+class OptionalValueNotAStringException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(): self
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class OptionalPropertyNotAnEnumException extends AbstractMalformedRequestBody
+class OptionalPropertyNotAnEnumException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForList(string $key, array $listOfValidValues, string $givenValue): self
     {

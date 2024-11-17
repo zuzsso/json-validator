@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class RequiredArrayIsEmptyException extends AbstractMalformedRequestBody
+class RequiredArrayIsEmptyException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(): self
     {

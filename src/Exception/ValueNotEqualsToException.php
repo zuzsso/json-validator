@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class ValueNotEqualsToException extends AbstractMalformedRequestBody
+class ValueNotEqualsToException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForInteger(string $key, int $compareTo, int $value): self
     {

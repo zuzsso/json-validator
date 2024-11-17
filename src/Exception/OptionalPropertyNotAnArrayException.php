@@ -6,7 +6,7 @@ namespace JsonValidator\Exception;
 
 use Exception;
 
-class OptionalPropertyNotAnArrayException extends AbstractMalformedRequestBody
+class OptionalPropertyNotAnArrayException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForKey(string $key): self
     {

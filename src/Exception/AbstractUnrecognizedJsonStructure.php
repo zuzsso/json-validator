@@ -6,7 +6,7 @@ namespace JsonValidator\Exception;
 
 use Exception;
 
-abstract class AbstractMalformedRequestBody extends Exception
+abstract class AbstractUnrecognizedJsonStructure extends Exception
 {
     abstract public function getErrorCode(): string;
 

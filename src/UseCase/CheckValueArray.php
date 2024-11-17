@@ -8,7 +8,7 @@ use JsonValidator\Exception\IncorrectParametrizationException;
 use JsonValidator\Exception\InvalidIntegerValueException;
 use JsonValidator\Exception\RequiredArrayIsEmptyException;
 use JsonValidator\Exception\ValueArrayNotExactLengthException;
-use JsonValidator\Exception\ValueNotAJsonObjectException;
+use JsonValidator\Exception\ValueNotAJsonObjectExceptionStructure;
 use JsonValidator\Exception\ValueNotAnArrayException;
 use JsonValidator\Exception\ValueNotAStringException;
 use JsonValidator\Exception\ValueTooBigException;
@@ -19,7 +19,7 @@ interface CheckValueArray
 {
     /**
      * @throws RequiredArrayIsEmptyException
-     * @throws ValueNotAJsonObjectException
+     * @throws ValueNotAJsonObjectExceptionStructure
      * @throws ValueNotAnArrayException
      */
     public function arrayOfJsonObjects(array $arrayElements, bool $required = true): self;

@@ -7,7 +7,7 @@ namespace JsonValidator\Service;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryForbiddenException;
 use JsonValidator\Exception\EntryMissingException;
-use JsonValidator\Exception\InvalidJsonObjectValueException;
+use JsonValidator\Exception\InvalidJsonObjectValueExceptionStructure;
 use JsonValidator\UseCase\CheckKeyJsonObject;
 use JsonValidator\UseCase\CheckKeyPresence;
 
@@ -21,7 +21,7 @@ class KeyJsonObjectChecker implements CheckKeyJsonObject
     }
 
     /**
-     * @throws InvalidJsonObjectValueException
+     * @throws InvalidJsonObjectValueExceptionStructure
      * @throws EntryEmptyException
      * @throws EntryMissingException
      */
@@ -32,12 +32,12 @@ class KeyJsonObjectChecker implements CheckKeyJsonObject
         $payloadValue = $payload[$key];
 
         if (!is_array($payloadValue)) {
-            throw InvalidJsonObjectValueException::constructForRequiredKey($key);
+            throw InvalidJsonObjectValueExceptionStructure::constructForRequiredKey($key);
         }
 
         foreach ($payloadValue as $subKey => $value) {
             if (!is_string($subKey)) {
-                throw InvalidJsonObjectValueException::constructForRequiredKey($key);
+                throw InvalidJsonObjectValueExceptionStructure::constructForRequiredKey($key);
             }
         }
 
@@ -45,7 +45,7 @@ class KeyJsonObjectChecker implements CheckKeyJsonObject
     }
 
     /**
-     * @throws InvalidJsonObjectValueException
+     * @throws InvalidJsonObjectValueExceptionStructure
      */
     public function optional(string $key, array $payload): CheckKeyJsonObject
     {
@@ -58,8 +58,8 @@ class KeyJsonObjectChecker implements CheckKeyJsonObject
         try {
             $this->required($key, $payload);
             return $this;
-        } catch (EntryEmptyException | EntryMissingException | InvalidJsonObjectValueException $e) {
-            throw InvalidJsonObjectValueException::constructForOptionalValue($key);
+        } catch (EntryEmptyException | EntryMissingException | InvalidJsonObjectValueExceptionStructure $e) {
+            throw InvalidJsonObjectValueExceptionStructure::constructForOptionalValue($key);
         }
     }
 }

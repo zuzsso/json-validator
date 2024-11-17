@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class ValueTooSmallException extends AbstractMalformedRequestBody
+class ValueTooSmallException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStringLength(string $key, int $expectedLength, int $actualLength): self
     {

@@ -11,7 +11,7 @@ use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\IncorrectParametrizationException;
 use JsonValidator\Exception\OptionalPropertyNotAnArrayException;
 use JsonValidator\Exception\RequiredArrayIsEmptyException;
-use JsonValidator\Exception\ValueNotAJsonObjectException;
+use JsonValidator\Exception\ValueNotAJsonObjectExceptionStructure;
 use JsonValidator\Exception\ValueNotAnArrayException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
@@ -202,8 +202,8 @@ class KeyArrayCheckerTest extends CustomTestCase
             $variableTests[] = [$key, [$key => 'a'], $v, ValueNotAnArrayException::class, $m3];
             $variableTests[] = [$key, [$key => '  '], $v, EntryEmptyException::class, $m2];
             $variableTests[] = [$key, [$key => 1], $v, ValueNotAnArrayException::class, $m3];
-            $variableTests[] = [$key, [$key => [1, 2, 3]], $v, ValueNotAJsonObjectException::class, $m4];
-            $variableTests[] = [$key, [$key => [[], 2, 3]], $v, ValueNotAJsonObjectException::class, $m5];
+            $variableTests[] = [$key, [$key => [1, 2, 3]], $v, ValueNotAJsonObjectExceptionStructure::class, $m4];
+            $variableTests[] = [$key, [$key => [[], 2, 3]], $v, ValueNotAJsonObjectExceptionStructure::class, $m5];
         }
 
         return array_merge($fixedTests, $variableTests);
@@ -214,7 +214,7 @@ class KeyArrayCheckerTest extends CustomTestCase
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
-     * @throws ValueNotAJsonObjectException
+     * @throws ValueNotAJsonObjectExceptionStructure
      * @throws ValueNotAnArrayException
      */
     public function testShouldFailKeyOfJsonObjects(
@@ -246,7 +246,7 @@ class KeyArrayCheckerTest extends CustomTestCase
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
-     * @throws ValueNotAJsonObjectException
+     * @throws ValueNotAJsonObjectExceptionStructure
      * @throws ValueNotAnArrayException
      */
     public function testShouldPassKeyOfJsonObjects(

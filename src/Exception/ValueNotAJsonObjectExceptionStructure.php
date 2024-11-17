@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class ValueNotAJsonObjectException extends AbstractMalformedRequestBody
+class ValueNotAJsonObjectExceptionStructure extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $subKey): self
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class ValueNotInListException extends AbstractMalformedRequestBody
+class ValueNotInListException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForList(string $key, array $listOfValidValues, string $givenValue): self
     {

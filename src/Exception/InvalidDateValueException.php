@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class InvalidDateValueException extends AbstractMalformedRequestBody
+class InvalidDateValueException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $key, string $format, string $value): self
     {

@@ -7,7 +7,7 @@ namespace JsonValidator\Tests;
 use JsonValidator\Exception\IncorrectParametrizationException;
 use JsonValidator\Exception\RequiredArrayIsEmptyException;
 use JsonValidator\Exception\ValueArrayNotExactLengthException;
-use JsonValidator\Exception\ValueNotAJsonObjectException;
+use JsonValidator\Exception\ValueNotAJsonObjectExceptionStructure;
 use JsonValidator\Exception\ValueNotAnArrayException;
 use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
@@ -40,14 +40,14 @@ class ValueArrayCheckerTest extends CustomTestCase
         $variableTests = [];
 
         foreach ($variable as $v) {
-            $variableTests[] = [["blah"], $v, ValueNotAJsonObjectException::class, $m2];
+            $variableTests[] = [["blah"], $v, ValueNotAJsonObjectExceptionStructure::class, $m2];
 
-            $variableTests[] = [[1, 2, 3], $v, ValueNotAJsonObjectException::class, $m2];
-            $variableTests[] = [['', 2, 3], $v, ValueNotAJsonObjectException::class, $m2];
-            $variableTests[] = [['  ', 2, 3], $v, ValueNotAJsonObjectException::class, $m2];
-            $variableTests[] = [[1.3, 2, 3], $v, ValueNotAJsonObjectException::class, $m2];
-            $variableTests[] = [[null, 2, 3], $v, ValueNotAJsonObjectException::class, $m2];
-            $variableTests[] = [[[], 2, 3], $v, ValueNotAJsonObjectException::class, $m3];
+            $variableTests[] = [[1, 2, 3], $v, ValueNotAJsonObjectExceptionStructure::class, $m2];
+            $variableTests[] = [['', 2, 3], $v, ValueNotAJsonObjectExceptionStructure::class, $m2];
+            $variableTests[] = [['  ', 2, 3], $v, ValueNotAJsonObjectExceptionStructure::class, $m2];
+            $variableTests[] = [[1.3, 2, 3], $v, ValueNotAJsonObjectExceptionStructure::class, $m2];
+            $variableTests[] = [[null, 2, 3], $v, ValueNotAJsonObjectExceptionStructure::class, $m2];
+            $variableTests[] = [[[], 2, 3], $v, ValueNotAJsonObjectExceptionStructure::class, $m3];
         }
 
         return array_merge($fixedTests, $variableTests);
@@ -56,7 +56,7 @@ class ValueArrayCheckerTest extends CustomTestCase
     /**
      * @dataProvider shouldFailArrayOfJsonObjectsDataProvider
      * @throws ValueNotAnArrayException
-     * @throws ValueNotAJsonObjectException
+     * @throws ValueNotAJsonObjectExceptionStructure
      * @throws RequiredArrayIsEmptyException
      */
     public function testShouldFailArrayOfJsonObjects(
@@ -83,7 +83,7 @@ class ValueArrayCheckerTest extends CustomTestCase
     /**
      * @dataProvider shouldPassArrayOfJsonObjectsDataProvider
      * @throws RequiredArrayIsEmptyException
-     * @throws ValueNotAJsonObjectException
+     * @throws ValueNotAJsonObjectExceptionStructure
      * @throws ValueNotAnArrayException
      */
     public function testShouldPassArrayOfJsonObjects(array $payload, bool $required): void

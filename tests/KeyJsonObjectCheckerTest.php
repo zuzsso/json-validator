@@ -8,7 +8,7 @@ use DI\DependencyException;
 use DI\NotFoundException;
 use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryMissingException;
-use JsonValidator\Exception\InvalidJsonObjectValueException;
+use JsonValidator\Exception\InvalidJsonObjectValueExceptionStructure;
 use JsonValidator\Service\KeyJsonObjectChecker;
 use JsonValidator\UseCase\CheckKeyPresence;
 
@@ -40,15 +40,15 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
             [$key, [$key => null], EntryEmptyException::class, $m2],
             [$key, [$key => ''], EntryEmptyException::class, $m2],
             [$key, [$key => []], EntryEmptyException::class, $m2],
-            [$key, [$key => [1, 2, 3]], InvalidJsonObjectValueException::class, $m3],
-            [$key, [$key => ["a", true, 1.3]], InvalidJsonObjectValueException::class, $m3],
-            [$key, [$key => [[], []]], InvalidJsonObjectValueException::class, $m3],
+            [$key, [$key => [1, 2, 3]], InvalidJsonObjectValueExceptionStructure::class, $m3],
+            [$key, [$key => ["a", true, 1.3]], InvalidJsonObjectValueExceptionStructure::class, $m3],
+            [$key, [$key => [[], []]], InvalidJsonObjectValueExceptionStructure::class, $m3],
         ];
     }
 
     /**
      * @dataProvider shouldFailRequiredDataProvider
-     * @throws InvalidJsonObjectValueException
+     * @throws InvalidJsonObjectValueExceptionStructure
      * @throws EntryEmptyException
      * @throws EntryMissingException
      */
@@ -79,7 +79,7 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
-     * @throws InvalidJsonObjectValueException
+     * @throws InvalidJsonObjectValueExceptionStructure
      */
     public function testShouldPassRequired(string $key, array $payload): void
     {
@@ -94,15 +94,15 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
         $m1 = "The key 'myKey' is optional, but if provided, it must be a valid JSON object";
 
         return [
-            [$key, [$key => []], InvalidJsonObjectValueException::class, $m1],
-            [$key, [$key => 1], InvalidJsonObjectValueException::class, $m1],
-            [$key, [$key => ""], InvalidJsonObjectValueException::class, $m1],
+            [$key, [$key => []], InvalidJsonObjectValueExceptionStructure::class, $m1],
+            [$key, [$key => 1], InvalidJsonObjectValueExceptionStructure::class, $m1],
+            [$key, [$key => ""], InvalidJsonObjectValueExceptionStructure::class, $m1],
         ];
     }
 
     /**
      * @dataProvider shouldFailOptionalDataProvider
-     * @throws InvalidJsonObjectValueException
+     * @throws InvalidJsonObjectValueExceptionStructure
      */
     public function testShouldFailOptional(
         string $key,
@@ -129,7 +129,7 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
 
     /**
      * @dataProvider shouldPassOptionalDataProvider
-     * @throws InvalidJsonObjectValueException
+     * @throws InvalidJsonObjectValueExceptionStructure
      */
     public function testShouldPassOptional(string $key, array $payload): void
     {

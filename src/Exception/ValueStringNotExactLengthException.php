@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class ValueStringNotExactLengthException extends AbstractMalformedRequestBody
+class ValueStringNotExactLengthException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $key, int $expectedLength, int $actualLength): self
     {

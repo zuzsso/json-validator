@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class InvalidIntegerValueException extends AbstractMalformedRequestBody
+class InvalidIntegerValueException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $key): self
     {

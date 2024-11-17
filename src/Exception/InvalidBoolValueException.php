@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class InvalidBoolValueException extends AbstractMalformedRequestBody
+class InvalidBoolValueException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $key): self
     {

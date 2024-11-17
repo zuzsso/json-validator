@@ -11,7 +11,7 @@ use JsonValidator\Exception\InvalidIntegerValueException;
 use JsonValidator\Exception\OptionalPropertyNotAnArrayException;
 use JsonValidator\Exception\RequiredArrayIsEmptyException;
 use JsonValidator\Exception\ValueArrayNotExactLengthException;
-use JsonValidator\Exception\ValueNotAJsonObjectException;
+use JsonValidator\Exception\ValueNotAJsonObjectExceptionStructure;
 use JsonValidator\Exception\ValueNotAnArrayException;
 use JsonValidator\Exception\ValueNotAStringException;
 use JsonValidator\Exception\ValueTooBigException;
@@ -39,7 +39,7 @@ interface CheckKeyArray
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
      * @throws ValueNotAnArrayException
-     * @throws ValueNotAJsonObjectException
+     * @throws ValueNotAJsonObjectExceptionStructure
      */
     public function keyArrayOfJsonObjects(string $key, array $payload, bool $required = true): self;
 

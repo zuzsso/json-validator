@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class InvalidJsonObjectValueException extends AbstractMalformedRequestBody
+class InvalidJsonObjectValueExceptionStructure extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForRequiredKey(string $key): self
     {

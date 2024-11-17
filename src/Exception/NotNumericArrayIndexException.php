@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JsonValidator\Exception;
 
-class NotNumericArrayIndexException extends AbstractMalformedRequestBody
+class NotNumericArrayIndexException extends AbstractUnrecognizedJsonStructure
 {
     public static function constructForStandardMessage(string $index): self
     {
