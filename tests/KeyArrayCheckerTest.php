@@ -19,6 +19,7 @@ use JsonValidator\Service\KeyArrayChecker;
 use JsonValidator\Types\Range\ArrayLengthRange;
 use JsonValidator\UseCase\CheckKeyPresence;
 use JsonValidator\UseCase\CheckValueArray;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyArrayCheckerTest extends CustomTestCase
 {
@@ -38,7 +39,7 @@ class KeyArrayCheckerTest extends CustomTestCase
         );
     }
 
-    public function shouldFailRequiredDataProvider(): array
+    public static function shouldFailRequiredDataProvider(): array
     {
         $key = 'myKey';
         $m1 = "Entry '$key' missing";
@@ -69,13 +70,12 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailRequiredDataProvider
-     *
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldFailRequiredDataProvider')]
     public function testShouldFailRequiredKey(
         string $key,
         array $payload,
@@ -88,7 +88,7 @@ class KeyArrayCheckerTest extends CustomTestCase
         $this->sut->requiredKey($key, $payload);
     }
 
-    public function shouldPassRequiredDataProvider(): array
+    public static function shouldPassRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -100,19 +100,19 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAnArrayException
      * @throws RequiredArrayIsEmptyException
      */
+    #[DataProvider('shouldPassRequiredDataProvider')]
     public function testShouldPassRequiredKey(string $key, array $payload): void
     {
         $this->sut->requiredKey($key, $payload);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailOptionalKeyDataProvider(): array
+    public static function shouldFailOptionalKeyDataProvider(): array
     {
         $key = 'myKey';
         $m4 = "Associative arrays not supported";
@@ -135,10 +135,10 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailOptionalKeyDataProvider
      * @throws ValueNotAnArrayException
      * @throws OptionalPropertyNotAnArrayException
      */
+    #[DataProvider('shouldFailOptionalKeyDataProvider')]
     public function testShouldFailOptionalKey(
         string $key,
         array $payload,
@@ -151,7 +151,7 @@ class KeyArrayCheckerTest extends CustomTestCase
         $this->sut->optionalKey($key, $payload);
     }
 
-    public function shouldPassOptionalKeyDataProvider(): array
+    public static function shouldPassOptionalKeyDataProvider(): array
     {
         $key = 'myKey';
 
@@ -165,12 +165,11 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassOptionalKeyDataProvider
-     * @dataProvider shouldPassRequiredDataProvider
-     *
      * @throws OptionalPropertyNotAnArrayException
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldPassRequiredDataProvider')]
+    #[DataProvider('shouldPassOptionalKeyDataProvider')]
     public function testShouldPassOptionalKey(string $key, array $payload): void
     {
         $this->sut->optionalKey($key, $payload);
@@ -178,7 +177,7 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldFailKeyOfJsonObjectsDataProvider(): array
+    public static function shouldFailKeyOfJsonObjectsDataProvider(): array
     {
         $key = 'myKey';
 
@@ -210,13 +209,13 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailKeyOfJsonObjectsDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
      * @throws ValueNotAJsonObjectExceptionStructure
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldFailKeyOfJsonObjectsDataProvider')]
     public function testShouldFailKeyOfJsonObjects(
         string $key,
         array $payload,
@@ -230,7 +229,7 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldPassKeyOfJsonObjectsDataProvider(): array
+    public static function shouldPassKeyOfJsonObjectsDataProvider(): array
     {
         $key = 'myKey';
 
@@ -242,13 +241,13 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassKeyOfJsonObjectsDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws RequiredArrayIsEmptyException
      * @throws ValueNotAJsonObjectExceptionStructure
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldPassKeyOfJsonObjectsDataProvider')]
     public function testShouldPassKeyOfJsonObjects(
         string $key,
         array $payload,
@@ -258,7 +257,7 @@ class KeyArrayCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailKeyArrayOfLengthRangeDataProvider(): array
+    public static function shouldFailKeyArrayOfLengthRangeDataProvider(): array
     {
         $key = 'myKey';
 
@@ -303,7 +302,6 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailKeyArrayOfLengthRangeDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws IncorrectParametrizationException
@@ -312,6 +310,7 @@ class KeyArrayCheckerTest extends CustomTestCase
      * @throws ValueTooSmallException
      * @throws RequiredArrayIsEmptyException
      */
+    #[DataProvider('shouldFailKeyArrayOfLengthRangeDataProvider')]
     public function testShouldFailKeyArrayOfLengthRange(
         string $key,
         array $payload,
@@ -327,7 +326,7 @@ class KeyArrayCheckerTest extends CustomTestCase
         $this->sut->keyArrayOfLengthRange($key, $payload, $range, $required);
     }
 
-    public function shouldPassKeyArrayOfLengthRangeDataProvider(): array
+    public static function shouldPassKeyArrayOfLengthRangeDataProvider(): array
     {
         $key = 'myKey';
 
@@ -354,7 +353,6 @@ class KeyArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassKeyArrayOfLengthRangeDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws IncorrectParametrizationException
@@ -363,6 +361,7 @@ class KeyArrayCheckerTest extends CustomTestCase
      * @throws ValueTooSmallException
      * @throws RequiredArrayIsEmptyException
      */
+    #[DataProvider('shouldPassKeyArrayOfLengthRangeDataProvider')]
     public function testShouldPassKeyArrayOfLengthRange(
         string $key,
         array $payload,

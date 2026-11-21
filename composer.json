@@ -1,48 +1,50 @@
 {
-    "name": "zuzsso/json-validator",
-    "description": "Common shareable functionality",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Nico Santamaria",
-            "email": "ndsans@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "config": {
-        "platform": {
-            "php": "7.4.28"
-        }
+  "name": "zuzsso/json-validator",
+  "description": "Common shareable functionality",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Nico Santamaria",
+      "email": "ndsans@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "config": {
+    "platform": {
+      "php": "8.3.0"
     },
-    "autoload": {
-        "psr-4": {
-            "JsonValidator\\": "src/"
-        }
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "JsonValidator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "JsonValidator\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "ext-intl": "*",
+    "php-di/php-di": "^7.0",
+    "ext-json": "*",
+    "zuzsso/di-manifest": "^2.0",
+    "zuzsso/math": "^2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.5",
+    "friendsofphp/php-cs-fixer": "*",
+    "phpmd/phpmd": "@stable"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/zuzsso/di-manifest"
     },
-    "autoload-dev": {
-        "psr-4": {
-            "JsonValidator\\Tests\\": "tests/"
-        }
-    },
-    "require": {
-        "php-di/php-di": "^6.2",
-        "ext-json": "*",
-        "zuzsso/di-manifest": "^1.0",
-        "zuzsso/math": "^1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.2.3",
-        "phpmd/phpmd": "@stable",
-        "friendsofphp/php-cs-fixer": "*"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/zuzsso/di-manifest"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/zuzsso/math"
-        }
-    ]
+    {
+      "type": "vcs",
+      "url": "https://github.com/zuzsso/math"
+    }
+  ]
 }

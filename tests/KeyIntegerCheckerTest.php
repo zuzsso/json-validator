@@ -17,6 +17,7 @@ use JsonValidator\Service\KeyIntegerChecker;
 use JsonValidator\Types\Range\IntValueRange;
 use JsonValidator\UseCase\CheckKeyPresence;
 use JsonValidator\UseCase\CheckValueInteger;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyIntegerCheckerTest extends CustomTestCase
 {
@@ -35,7 +36,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
         );
     }
 
-    public function shouldFailRequiredDataProvider(): array
+    public static function shouldFailRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -59,11 +60,11 @@ class KeyIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidIntegerValueException
      */
+    #[DataProvider('shouldFailRequiredDataProvider')]
     public function testShouldFailRequired(
         string $key,
         array $payload,
@@ -75,7 +76,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
         $this->sut->required($key, $payload);
     }
 
-    public function shouldPassRequiredDataProvider(): array
+    public static function shouldPassRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -87,11 +88,11 @@ class KeyIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidIntegerValueException
      */
+    #[DataProvider('shouldPassRequiredDataProvider')]
     public function testShouldPassRequired(
         string $key,
         array $payload
@@ -100,7 +101,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailOptionalDataProvider(): array
+    public static function shouldFailOptionalDataProvider(): array
     {
         $key = 'myKey';
         $m3 = "Entry 'myKey' does not hold a valid int value";
@@ -119,12 +120,12 @@ class KeyIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailOptionalDataProvider
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidIntegerValueException
      */
+    #[DataProvider('shouldFailOptionalDataProvider')]
     public function testShouldFailOptional(
         string $key,
         array $payload,
@@ -137,7 +138,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
         $this->sut->optional($key, $payload);
     }
 
-    public function shouldPassOptionalDataProvider(): array
+    public static function shouldPassOptionalDataProvider(): array
     {
         $key = 'myKey';
 
@@ -149,19 +150,19 @@ class KeyIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassOptionalDataProvider
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidIntegerValueException
      */
+    #[DataProvider('shouldPassOptionalDataProvider')]
     public function testShouldPassOptional(string $key, array $payload): void
     {
         $this->sut->optional($key, $payload);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailWithinRangeDataProvider(): array
+    public static function shouldFailWithinRangeDataProvider(): array
     {
         $key = 'myKey';
 
@@ -204,7 +205,6 @@ class KeyIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailWithinRangeDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws IncorrectParametrizationException
@@ -212,6 +212,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      */
+    #[DataProvider('shouldFailWithinRangeDataProvider')]
     public function testShouldFailWithinRange(
         string $key,
         array $payload,
@@ -229,7 +230,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
         $this->sut->withinRange($key, $payload, $range, $required);
     }
 
-    public function shouldPassWithinRangeDataProvider(): array
+    public static function shouldPassWithinRangeDataProvider(): array
     {
         $key = 'myKey';
 
@@ -258,7 +259,6 @@ class KeyIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassWithinRangeDataProvider
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
@@ -267,6 +267,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      */
+    #[DataProvider('shouldPassWithinRangeDataProvider')]
     public function testShouldPassWithinRange(
         string $key,
         array $payload,
@@ -279,7 +280,7 @@ class KeyIntegerCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailEqualsToDataProvider(): array
+    public static function shouldFailEqualsToDataProvider(): array
     {
         $key = 'myKey';
 
@@ -312,12 +313,12 @@ class KeyIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailEqualsToDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidIntegerValueException
      * @throws ValueNotEqualsToException
      */
+    #[DataProvider('shouldFailEqualsToDataProvider')]
     public function testShouldFailEqualsTo(
         string $key,
         array $payload,

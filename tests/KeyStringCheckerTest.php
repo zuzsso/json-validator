@@ -21,6 +21,7 @@ use JsonValidator\Service\KeyStringChecker;
 use JsonValidator\Types\Range\StringByteLengthRange;
 use JsonValidator\UseCase\CheckKeyPresence;
 use JsonValidator\UseCase\CheckValueString;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyStringCheckerTest extends CustomTestCase
 {
@@ -40,7 +41,7 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldPassRequiredDataProvider(): array
+    public static function shouldPassRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -51,18 +52,18 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAStringException
      */
+    #[DataProvider('shouldPassRequiredDataProvider')]
     public function testShouldPassRequired(string $key, array $payload): void
     {
         $this->sut->required($key, $payload);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailRequiredDataProvider(): array
+    public static function shouldFailRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -80,11 +81,11 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAStringException
      */
+    #[DataProvider('shouldFailRequiredDataProvider')]
     public function testShouldFailRequired(
         string $key,
         array $payload,
@@ -98,7 +99,7 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldPassOptionalDataProvider(): array
+    public static function shouldPassOptionalDataProvider(): array
     {
         $key = 'myKey';
         return [
@@ -109,16 +110,16 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassOptionalDataProvider
      * @throws OptionalPropertyNotAStringException
      */
+    #[DataProvider('shouldPassOptionalDataProvider')]
     public function testShouldPassOptional(string $key, array $payload): void
     {
         $this->sut->optional($key, $payload);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailOptionalDataProvider(): array
+    public static function shouldFailOptionalDataProvider(): array
     {
         $key = 'myKey';
         $msg001 = "The entry 'myKey' is optional, but if provided it should be a string";
@@ -132,9 +133,9 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailOptionalDataProvider
      * @throws OptionalPropertyNotAStringException
      */
+    #[DataProvider('shouldFailOptionalDataProvider')]
     public function testShouldFailOptional(
         string $key,
         array $payload,
@@ -148,7 +149,7 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
 
-    public function byteLengthRangeShouldThrowFailValidationDataProvider(): array
+    public static function byteLengthRangeShouldThrowFailValidationDataProvider(): array
     {
         $key = 'myKey';
 
@@ -210,7 +211,6 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider byteLengthRangeShouldThrowFailValidationDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAStringException
@@ -218,6 +218,7 @@ class KeyStringCheckerTest extends CustomTestCase
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      */
+    #[DataProvider('byteLengthRangeShouldThrowFailValidationDataProvider')]
     public function testByteLengthRangeShouldFailValidation(
         string $key,
         array $payload,
@@ -234,7 +235,7 @@ class KeyStringCheckerTest extends CustomTestCase
         $this->sut->byteLengthRange($key, $payload, $range, $required);
     }
 
-    public function shouldPassByteLengthRangeDataProvider(): array
+    public static function shouldPassByteLengthRangeDataProvider(): array
     {
         $key = 'myKey';
 
@@ -259,7 +260,6 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassByteLengthRangeDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws IncorrectParametrizationException
@@ -267,6 +267,7 @@ class KeyStringCheckerTest extends CustomTestCase
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      */
+    #[DataProvider('shouldPassByteLengthRangeDataProvider')]
     public function testShouldPassByteLengthRange(
         string $key,
         array $payload,
@@ -279,7 +280,7 @@ class KeyStringCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailExactByteLengthDataProvider(): array
+    public static function shouldFailExactByteLengthDataProvider(): array
     {
         $key = 'myKey';
 
@@ -316,8 +317,8 @@ class KeyStringCheckerTest extends CustomTestCase
      * @throws IncorrectParametrizationException
      * @throws ValueStringNotExactLengthException
      * @throws ValueNotAStringException
-     * @dataProvider shouldFailExactByteLengthDataProvider
      */
+    #[DataProvider('shouldFailExactByteLengthDataProvider')]
     public function testShouldFailExactByteLength(
         string $key,
         array $payload,
@@ -332,7 +333,7 @@ class KeyStringCheckerTest extends CustomTestCase
         $this->sut->exactByteLength($key, $payload, $exactLength, $required);
     }
 
-    public function shouldPassExactByteLengthDataProvider(): array
+    public static function shouldPassExactByteLengthDataProvider(): array
     {
         $key = 'myKey';
 
@@ -359,13 +360,13 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassExactByteLengthDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws IncorrectParametrizationException
      * @throws ValueNotAStringException
      * @throws ValueStringNotExactLengthException
      */
+    #[DataProvider('shouldPassExactByteLengthDataProvider')]
     public function testShouldPassExactByteLength(
         string $key,
         array $payload,
@@ -377,7 +378,7 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldFailUrlFormatDataProvider(): array
+    public static function shouldFailUrlFormatDataProvider(): array
     {
         $key = 'myKey';
 
@@ -409,12 +410,12 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailUrlFormatDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws StringIsNotAnUrlException
      * @throws ValueNotAStringException
      */
+    #[DataProvider('shouldFailUrlFormatDataProvider')]
     public function testShouldFailUrlFormat(
         string $key,
         array $payload,
@@ -427,7 +428,7 @@ class KeyStringCheckerTest extends CustomTestCase
         $this->sut->urlFormat($key, $payload, $required);
     }
 
-    public function shouldPassUrlFormatDataProvider(): array
+    public static function shouldPassUrlFormatDataProvider(): array
     {
         $key = 'myKey';
 
@@ -449,12 +450,12 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassUrlFormatDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws StringIsNotAnUrlException
      * @throws ValueNotAStringException
      */
+    #[DataProvider('shouldPassUrlFormatDataProvider')]
     public function testShouldPassUrlFormat(
         string $key,
         array $payload,
@@ -464,7 +465,7 @@ class KeyStringCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailDateTimeFormatDataProvider(): array
+    public static function shouldFailDateTimeFormatDataProvider(): array
     {
         $dateFormat001 = 'Y-m-d';
         $date002 = '2024-03-25 23:00:59';
@@ -498,13 +499,13 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailDateTimeFormatDataProvider
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidDateValueException
      * @throws ValueNotAStringException
      */
+    #[DataProvider('shouldFailDateTimeFormatDataProvider')]
     public function testShouldFailDateTimeFormat(
         string $key,
         array $payload,
@@ -519,7 +520,7 @@ class KeyStringCheckerTest extends CustomTestCase
         $this->sut->dateTimeFormat($key, $payload, $dateTimeFormat, $required);
     }
 
-    public function shouldPassDateTimeFormatDataProvider(): array
+    public static function shouldPassDateTimeFormatDataProvider(): array
     {
         $key = 'myKey';
 
@@ -544,12 +545,12 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassDateTimeFormatDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidDateValueException
      * @throws ValueNotAStringException
      */
+    #[DataProvider('shouldPassDateTimeFormatDataProvider')]
     public function testShouldPassDateTimeFormat(
         string $key,
         array $payload,
@@ -561,7 +562,7 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldFailKeyEmailCheckerDataProvider(): array
+    public static function shouldFailKeyEmailCheckerDataProvider(): array
     {
         $key = 'myKey';
 
@@ -595,12 +596,12 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailKeyEmailCheckerDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAStringException
      * @throws KeyNotEmailException
      */
+    #[DataProvider('shouldFailKeyEmailCheckerDataProvider')]
     public function testShouldFailKeyEmailChecker(
         string $key,
         array $payload,
@@ -614,7 +615,7 @@ class KeyStringCheckerTest extends CustomTestCase
         $this->sut->emailFormat($key, $payload, $required);
     }
 
-    public function shouldPassKeyEmailCheckerDataProvider(): array
+    public static function shouldPassKeyEmailCheckerDataProvider(): array
     {
         $key = 'myKey';
         return [
@@ -626,12 +627,12 @@ class KeyStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassKeyEmailCheckerDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws KeyNotEmailException
      * @throws ValueNotAStringException
      */
+    #[DataProvider('shouldPassKeyEmailCheckerDataProvider')]
     public function testShouldPassKeyEmailChecker(string $key, array $payload, bool $required): void
     {
         $this->expectNotToPerformAssertions();

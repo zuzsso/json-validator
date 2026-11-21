@@ -7,6 +7,7 @@ namespace JsonValidator\Tests;
 use JsonValidator\Exception\StringValueNotAnEmailException;
 use JsonValidator\Exception\ValueStringEmptyException;
 use JsonValidator\Service\ValueStringChecker;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ValueStringCheckerTest extends CustomTestCase
 {
@@ -18,7 +19,7 @@ class ValueStringCheckerTest extends CustomTestCase
         $this->sut = new ValueStringChecker();
     }
 
-    public function shouldFailEmailValidationDataProvider(): array
+    public static function shouldFailEmailValidationDataProvider(): array
     {
         $m1 = 'Expected a string, but got null or empty string';
         $m2 = "The value 'blah' is meant to represent an email address, but it doesn't";
@@ -44,10 +45,10 @@ class ValueStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailEmailValidationDataProvider
      * @throws StringValueNotAnEmailException
      * @throws ValueStringEmptyException
      */
+    #[DataProvider('shouldFailEmailValidationDataProvider')]
     public function testShouldFailEmailValidation(
         ?string $value,
         bool $required,
@@ -61,7 +62,7 @@ class ValueStringCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldAcceptEmailValidationDataProvider(): array
+    public static function shouldAcceptEmailValidationDataProvider(): array
     {
         $fixedTests = [
             [null, false],
@@ -89,10 +90,10 @@ class ValueStringCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldAcceptEmailValidationDataProvider
      * @throws StringValueNotAnEmailException
      * @throws ValueStringEmptyException
      */
+    #[DataProvider('shouldAcceptEmailValidationDataProvider')]
     public function testShouldAcceptEmailValidation(?string $value, bool $required): void
     {
         $this->expectNotToPerformAssertions();

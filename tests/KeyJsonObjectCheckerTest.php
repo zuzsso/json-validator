@@ -11,6 +11,7 @@ use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\InvalidJsonObjectValueExceptionStructure;
 use JsonValidator\Service\KeyJsonObjectChecker;
 use JsonValidator\UseCase\CheckKeyPresence;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyJsonObjectCheckerTest extends CustomTestCase
 {
@@ -28,7 +29,7 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
         );
     }
 
-    public function shouldFailRequiredDataProvider(): array
+    public static function shouldFailRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -47,11 +48,11 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailRequiredDataProvider
      * @throws InvalidJsonObjectValueExceptionStructure
      * @throws EntryEmptyException
      * @throws EntryMissingException
      */
+    #[DataProvider('shouldFailRequiredDataProvider')]
     public function testShouldFailRequired(
         string $key,
         array $payload,
@@ -64,7 +65,7 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
         $this->sut->required($key, $payload);
     }
 
-    public function shouldPassRequiredDataProvider(): array
+    public static function shouldPassRequiredDataProvider(): array
     {
         $key = 'myKey';
         return [
@@ -75,12 +76,12 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
 
 
     /**
-     * @dataProvider shouldPassRequiredDataProvider
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidJsonObjectValueExceptionStructure
      */
+    #[DataProvider('shouldPassRequiredDataProvider')]
     public function testShouldPassRequired(string $key, array $payload): void
     {
         $this->sut->required($key, $payload);
@@ -88,7 +89,7 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailOptionalDataProvider(): array
+    public static function shouldFailOptionalDataProvider(): array
     {
         $key = "myKey";
         $m1 = "The key 'myKey' is optional, but if provided, it must be a valid JSON object";
@@ -101,9 +102,9 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailOptionalDataProvider
      * @throws InvalidJsonObjectValueExceptionStructure
      */
+    #[DataProvider('shouldFailOptionalDataProvider')]
     public function testShouldFailOptional(
         string $key,
         array $payload,
@@ -116,7 +117,7 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
         $this->sut->optional($key, $payload);
     }
 
-    public function shouldPassOptionalDataProvider(): array
+    public static function shouldPassOptionalDataProvider(): array
     {
         $key = "myKey";
 
@@ -128,9 +129,9 @@ class KeyJsonObjectCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassOptionalDataProvider
      * @throws InvalidJsonObjectValueExceptionStructure
      */
+    #[DataProvider('shouldPassOptionalDataProvider')]
     public function testShouldPassOptional(string $key, array $payload): void
     {
         $this->sut->optional($key, $payload);

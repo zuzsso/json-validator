@@ -19,6 +19,7 @@ use JsonValidator\Types\Range\FloatRange;
 use JsonValidator\UseCase\CheckKeyPresence;
 use Math\Numbers\Service\FloatsService;
 use Math\Numbers\UseCase\EqualFloats;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyFloatCheckerTest extends CustomTestCase
 {
@@ -41,7 +42,7 @@ class KeyFloatCheckerTest extends CustomTestCase
         );
     }
 
-    public function shouldFailRequiredDataProvider(): array
+    public static function shouldFailRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -68,11 +69,11 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAFloatException
      */
+    #[DataProvider('shouldFailRequiredDataProvider')]
     public function testShouldFailRequired(
         string $key,
         array $payload,
@@ -85,7 +86,7 @@ class KeyFloatCheckerTest extends CustomTestCase
         $this->sut->required($key, $payload);
     }
 
-    public function shouldPassRequiredDataProvider(): array
+    public static function shouldPassRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -96,18 +97,18 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAFloatException
      */
+    #[DataProvider('shouldPassRequiredDataProvider')]
     public function testShouldPassRequired(string $key, array $payload): void
     {
         $this->sut->required($key, $payload);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailOptionalDataProvider(): array
+    public static function shouldFailOptionalDataProvider(): array
     {
         $key = 'myKey';
 
@@ -125,10 +126,10 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailOptionalDataProvider
      *
      * @throws OptionalPropertyNotAFloatException
      */
+    #[DataProvider('shouldFailOptionalDataProvider')]
     public function testShouldFailOptional(
         string $key,
         array $payload,
@@ -140,7 +141,7 @@ class KeyFloatCheckerTest extends CustomTestCase
         $this->sut->optional($key, $payload);
     }
 
-    public function shouldPassOptionalDataProvider(): array
+    public static function shouldPassOptionalDataProvider(): array
     {
         $key = 'myKey';
 
@@ -152,16 +153,16 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassOptionalDataProvider
      * @throws OptionalPropertyNotAFloatException
      */
+    #[DataProvider('shouldPassOptionalDataProvider')]
     public function testShouldPassOptional(string $key, array $payload): void
     {
         $this->sut->optional($key, $payload);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailWithinRangeDataProvider(): array
+    public static function shouldFailWithinRangeDataProvider(): array
     {
         $key = 'myKey';
 
@@ -212,7 +213,6 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailWithinRangeDataProvider
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
@@ -221,6 +221,7 @@ class KeyFloatCheckerTest extends CustomTestCase
      * @throws ValueTooSmallException
      * @throws ValueTooBigException
      */
+    #[DataProvider('shouldFailWithinRangeDataProvider')]
     public function testShouldFailWithinRange(
         string $key,
         array $payload,
@@ -237,7 +238,7 @@ class KeyFloatCheckerTest extends CustomTestCase
         $this->sut->withinRange($key, $payload, $range, $required);
     }
 
-    public function shouldPassWithinRangeDataProvider(): array
+    public static function shouldPassWithinRangeDataProvider(): array
     {
         $key = 'myKey';
 
@@ -267,7 +268,6 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassWithinRangeDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws IncorrectParametrizationException
@@ -275,6 +275,7 @@ class KeyFloatCheckerTest extends CustomTestCase
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      */
+    #[DataProvider('shouldPassWithinRangeDataProvider')]
     public function testShouldPassWithinRange(
         string $key,
         array $payload,
@@ -287,7 +288,7 @@ class KeyFloatCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailEqualsToDataProvider(): array
+    public static function shouldFailEqualsToDataProvider(): array
     {
         $key = 'myKey';
 
@@ -324,13 +325,13 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailEqualsToDataProvider
      *
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAFloatException
      * @throws ValueNotEqualsToException
      */
+    #[DataProvider('shouldFailEqualsToDataProvider')]
     public function testShouldFailEqualsTo(
         string $key,
         array $payload,
@@ -346,7 +347,7 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
 
-    public function shouldPassEqualsToDataProvider(): array
+    public static function shouldPassEqualsToDataProvider(): array
     {
         $key = 'myKey';
 
@@ -366,12 +367,12 @@ class KeyFloatCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassEqualsToDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotAFloatException
      * @throws ValueNotEqualsToException
      */
+    #[DataProvider('shouldPassEqualsToDataProvider')]
     public function testShouldPassEqualsTo(string $key, array $payload, float $compareTo, bool $required): void
     {
         $this->sut->equalsTo($key, $payload, $compareTo, $required);

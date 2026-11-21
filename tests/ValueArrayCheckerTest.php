@@ -13,6 +13,7 @@ use JsonValidator\Exception\ValueTooBigException;
 use JsonValidator\Exception\ValueTooSmallException;
 use JsonValidator\Service\ValueArrayChecker;
 use JsonValidator\Types\Range\ArrayLengthRange;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ValueArrayCheckerTest extends CustomTestCase
 {
@@ -25,7 +26,7 @@ class ValueArrayCheckerTest extends CustomTestCase
         $this->sut = new ValueArrayChecker();
     }
 
-    public function shouldFailArrayOfJsonObjectsDataProvider(): array
+    public static function shouldFailArrayOfJsonObjectsDataProvider(): array
     {
         $m1 = "The array is required not to be empty";
         $m2 = "Item index '0' is not a JSON object";
@@ -54,11 +55,11 @@ class ValueArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailArrayOfJsonObjectsDataProvider
      * @throws ValueNotAnArrayException
      * @throws ValueNotAJsonObjectExceptionStructure
      * @throws RequiredArrayIsEmptyException
      */
+    #[DataProvider('shouldFailArrayOfJsonObjectsDataProvider')]
     public function testShouldFailArrayOfJsonObjects(
         array $payload,
         bool $required,
@@ -71,7 +72,7 @@ class ValueArrayCheckerTest extends CustomTestCase
         $this->sut->arrayOfJsonObjects($payload, $required);
     }
 
-    public function shouldPassArrayOfJsonObjectsDataProvider(): array
+    public static function shouldPassArrayOfJsonObjectsDataProvider(): array
     {
         return [
             [[], false],
@@ -81,18 +82,18 @@ class ValueArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassArrayOfJsonObjectsDataProvider
      * @throws RequiredArrayIsEmptyException
      * @throws ValueNotAJsonObjectExceptionStructure
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldPassArrayOfJsonObjectsDataProvider')]
     public function testShouldPassArrayOfJsonObjects(array $payload, bool $required): void
     {
         $this->sut->arrayOfJsonObjects($payload, $required);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailArrayOfLengthRangeDataProvider(): array
+    public static function shouldFailArrayOfLengthRangeDataProvider(): array
     {
         $m1 = "No range given";
         $m2 = "Zero or negative range is not allowed as min value. Given: 0.";
@@ -118,12 +119,12 @@ class ValueArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailArrayOfLengthRangeDataProvider
      * @throws IncorrectParametrizationException
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldFailArrayOfLengthRangeDataProvider')]
     public function testShouldFailArrayOfLengthRange(
         array $payload,
         ?int $minLength,
@@ -138,7 +139,7 @@ class ValueArrayCheckerTest extends CustomTestCase
         $this->sut->arrayOfLengthRange($payload, $range);
     }
 
-    public function shouldPassArrayOfLengthRangeDataProvider(): array
+    public static function shouldPassArrayOfLengthRangeDataProvider(): array
     {
         return [
             [[[]], 1, null],
@@ -155,12 +156,12 @@ class ValueArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassArrayOfLengthRangeDataProvider
      * @throws IncorrectParametrizationException
      * @throws ValueTooBigException
      * @throws ValueTooSmallException
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldPassArrayOfLengthRangeDataProvider')]
     public function testShouldPassArrayOfLengthRange(array $payload, ?int $minLength, ?int $maxLength): void
     {
         $range = new ArrayLengthRange($minLength, $maxLength);
@@ -168,7 +169,7 @@ class ValueArrayCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailArrayOfExactLengthDataProvider(): array
+    public static function shouldFailArrayOfExactLengthDataProvider(): array
     {
         $m1 = "Min required length is 1";
         $m2 = "Value is expected to be an array of exact length of 1, but it is 0";
@@ -182,11 +183,11 @@ class ValueArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailArrayOfExactLengthDataProvider
      * @throws IncorrectParametrizationException
      * @throws ValueArrayNotExactLengthException
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldFailArrayOfExactLengthDataProvider')]
     public function testShouldFailArrayOfExactLength(
         array $payload,
         int $expectedLength,
@@ -198,7 +199,7 @@ class ValueArrayCheckerTest extends CustomTestCase
         $this->sut->arrayOfExactLength($payload, $expectedLength);
     }
 
-    public function shouldPassArrayOfExactLengthDataProvider(): array
+    public static function shouldPassArrayOfExactLengthDataProvider(): array
     {
         return [
             [["a", "b"], 2],
@@ -208,11 +209,11 @@ class ValueArrayCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassArrayOfExactLengthDataProvider
      * @throws IncorrectParametrizationException
      * @throws ValueArrayNotExactLengthException
      * @throws ValueNotAnArrayException
      */
+    #[DataProvider('shouldPassArrayOfExactLengthDataProvider')]
     public function testShouldPassArrayOfExactLength(array $payload, int $expectedLength): void
     {
         $this->sut->arrayOfExactLength($payload, $expectedLength);

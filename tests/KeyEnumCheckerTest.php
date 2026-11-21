@@ -12,6 +12,7 @@ use JsonValidator\Exception\JsonPayloadValidatorUnmanagedException;
 use JsonValidator\Exception\ValueNotInListException;
 use JsonValidator\Service\KeyEnumChecker;
 use JsonValidator\UseCase\CheckKeyPresence;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyEnumCheckerTest extends CustomTestCase
 {
@@ -29,13 +30,13 @@ class KeyEnumCheckerTest extends CustomTestCase
         );
     }
 
-    public function shouldPassValidationDataProvider(): array
+    public static function shouldPassValidationDataProvider(): array
     {
         $key = 'myKey';
         $validValues1 = [1, 2, 3];
         $validValues2 = ['a', 'b', 'c'];
 
-        // Case sensitive, mixed types... not that I recommend using enums this way, but you can
+        // Case-sensitive, mixed types... not that I recommend using enums this way, but you can
         $validValues3 = ["A", 3, "b", 3.33, true, false];
 
         $fixedTests = [
@@ -63,19 +64,19 @@ class KeyEnumCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassValidationDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotInListException
      * @throws JsonPayloadValidatorUnmanagedException
      */
+    #[DataProvider('shouldPassValidationDataProvider')]
     public function testShouldPassValidation(string $key, array $payload, array $validValues, bool $required): void
     {
         $this->sut->isEnum($key, $payload, $validValues, $required);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailValidationDataProvider(): array
+    public static function shouldFailValidationDataProvider(): array
     {
         $key = 'myKey';
         $validValues1 = [1, 2, 3];
@@ -105,7 +106,7 @@ class KeyEnumCheckerTest extends CustomTestCase
             $variableTests[] = [$key, [$key => [[]]], $validValues1, $v, ValueNotInListException::class, $m5];
             $variableTests[] = [$key, [$key => 2.25], $validValues1, $v, ValueNotInListException::class, $m6];
 
-            // Case sensitive
+            // Case-sensitive
             $variableTests[] = [$key, [$key => "A"], $validValues2, $v, ValueNotInListException::class, $m7];
         }
 
@@ -113,12 +114,12 @@ class KeyEnumCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailValidationDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws ValueNotInListException
      * @throws JsonPayloadValidatorUnmanagedException
      */
+    #[DataProvider('shouldFailValidationDataProvider')]
     public function testShouldFailValidation(
         string $key,
         array $payload,

@@ -6,6 +6,7 @@ namespace JsonValidator\Tests;
 
 use JsonValidator\Exception\IntegerComponentsDontRepresentDate;
 use JsonValidator\Service\ValueIntegerChecker;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ValueIntegerCheckerTest extends CustomTestCase
 {
@@ -17,7 +18,7 @@ class ValueIntegerCheckerTest extends CustomTestCase
         $this->sut = new ValueIntegerChecker();
     }
 
-    public function shouldFailIntegerGroupRepresentsADateDataProvider(): array
+    public static function shouldFailIntegerGroupRepresentsADateDataProvider(): array
     {
         return [
             [-1, 2, 3],
@@ -35,9 +36,9 @@ class ValueIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailIntegerGroupRepresentsADateDataProvider
      * @throws IntegerComponentsDontRepresentDate
      */
+    #[DataProvider('shouldFailIntegerGroupRepresentsADateDataProvider')]
     public function testShouldFailIntegerGroupRepresentsADate(
         int $year,
         int $month,
@@ -50,7 +51,7 @@ class ValueIntegerCheckerTest extends CustomTestCase
         $this->sut->integerGroupRepresentsADate($year, $month, $day);
     }
 
-    public function shouldPassIntegerGroupRepresentsADateDataProvider(): array
+    public static function shouldPassIntegerGroupRepresentsADateDataProvider(): array
     {
         return [
             [2024, 3, 27],
@@ -59,9 +60,9 @@ class ValueIntegerCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassIntegerGroupRepresentsADateDataProvider
      * @throws IntegerComponentsDontRepresentDate
      */
+    #[DataProvider('shouldPassIntegerGroupRepresentsADateDataProvider')]
     public function testShouldPassIntegerGroupRepresentsADate(
         int $year,
         int $month,

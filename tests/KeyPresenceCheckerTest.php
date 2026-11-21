@@ -8,6 +8,7 @@ use JsonValidator\Exception\EntryEmptyException;
 use JsonValidator\Exception\EntryForbiddenException;
 use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Service\KeyPresenceChecker;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyPresenceCheckerTest extends CustomTestCase
 {
@@ -19,7 +20,7 @@ class KeyPresenceCheckerTest extends CustomTestCase
         $this->sut = new KeyPresenceChecker();
     }
 
-    public function shouldFailRequiredPresenceDataProvider(): array
+    public static function shouldFailRequiredPresenceDataProvider(): array
     {
         $key = 'myKey';
 
@@ -34,10 +35,10 @@ class KeyPresenceCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailRequiredPresenceDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      */
+    #[DataProvider('shouldFailRequiredPresenceDataProvider')]
     public function testShouldFailRequiredPresence(
         array $payloadFixture,
         string $requiredKey,
@@ -49,7 +50,7 @@ class KeyPresenceCheckerTest extends CustomTestCase
         $this->sut->required($requiredKey, $payloadFixture);
     }
 
-    public function shouldPassRequiredPresenceDataProvider(): array
+    public static function shouldPassRequiredPresenceDataProvider(): array
     {
         $key = 'myKey';
         return [
@@ -60,10 +61,10 @@ class KeyPresenceCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassRequiredPresenceDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      */
+    #[DataProvider('shouldPassRequiredPresenceDataProvider')]
     public function testShouldPassRequiredPresence(
         array $payloadFixture,
         string $requiredKey
@@ -72,7 +73,7 @@ class KeyPresenceCheckerTest extends CustomTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailForbiddenPresenceDataProvider(): array
+    public static function shouldFailForbiddenPresenceDataProvider(): array
     {
         $key = 'myKey';
         $msg = "Entry 'myKey' should not be present in the payload";
@@ -87,9 +88,9 @@ class KeyPresenceCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailForbiddenPresenceDataProvider
      * @throws EntryForbiddenException
      */
+    #[DataProvider('shouldFailForbiddenPresenceDataProvider')]
     public function testShouldFailForbiddenPresence(
         array $payloadFixture,
         string $forbiddenKey,
@@ -101,7 +102,7 @@ class KeyPresenceCheckerTest extends CustomTestCase
         $this->sut->forbidden($forbiddenKey, $payloadFixture);
     }
 
-    public function shouldPassForbiddenPresenceDataProvider(): array
+    public static function shouldPassForbiddenPresenceDataProvider(): array
     {
         $key = 'myKey';
         return [
@@ -111,9 +112,9 @@ class KeyPresenceCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassForbiddenPresenceDataProvider
      * @throws EntryForbiddenException
      */
+    #[DataProvider('shouldPassForbiddenPresenceDataProvider')]
     public function testShouldPassForbiddenPresence(array $payloadFixture, $forbiddenKey): void
     {
         $this->sut->forbidden($forbiddenKey, $payloadFixture);

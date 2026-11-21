@@ -11,6 +11,7 @@ use JsonValidator\Exception\EntryMissingException;
 use JsonValidator\Exception\InvalidBoolValueException;
 use JsonValidator\Service\KeyBooleanChecker;
 use JsonValidator\UseCase\CheckKeyPresence;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class KeyBooleanCheckerTest extends CustomTestCase
 {
@@ -28,7 +29,7 @@ class KeyBooleanCheckerTest extends CustomTestCase
         );
     }
 
-    public function shouldFailRequiredDataProvider(): array
+    public static function shouldFailRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -52,11 +53,11 @@ class KeyBooleanCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidBoolValueException
      */
+    #[DataProvider('shouldFailRequiredDataProvider')]
     public function testShouldFailRequired(
         string $key,
         array $payload,
@@ -69,7 +70,7 @@ class KeyBooleanCheckerTest extends CustomTestCase
         $this->sut->required($key, $payload);
     }
 
-    public function shouldPassRequiredDataProvider(): array
+    public static function shouldPassRequiredDataProvider(): array
     {
         $key = 'myKey';
 
@@ -80,18 +81,18 @@ class KeyBooleanCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassRequiredDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidBoolValueException
      */
+    #[DataProvider('shouldPassRequiredDataProvider')]
     public function testShouldPassRequired(string $key, array $payload): void
     {
         $this->sut->required($key, $payload);
         $this->expectNotToPerformAssertions();
     }
 
-    public function shouldFailOptionalDataProvider(): array
+    public static function shouldFailOptionalDataProvider(): array
     {
         $key = 'myKey';
         $m2 = "Entry 'myKey' empty";
@@ -110,11 +111,11 @@ class KeyBooleanCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldFailOptionalDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidBoolValueException
      */
+    #[DataProvider('shouldFailOptionalDataProvider')]
     public function testShouldFailOptional(
         string $key,
         array $payload,
@@ -126,7 +127,7 @@ class KeyBooleanCheckerTest extends CustomTestCase
         $this->sut->optional($key, $payload);
     }
 
-    public function shouldPassOptionalDataProvider(): array
+    public static function shouldPassOptionalDataProvider(): array
     {
         $key = 'myKey';
 
@@ -139,11 +140,11 @@ class KeyBooleanCheckerTest extends CustomTestCase
     }
 
     /**
-     * @dataProvider shouldPassOptionalDataProvider
      * @throws EntryEmptyException
      * @throws EntryMissingException
      * @throws InvalidBoolValueException
      */
+    #[DataProvider('shouldPassOptionalDataProvider')]
     public function testShouldPassOptional(string $key, array $payload): void
     {
         $this->sut->optional($key, $payload);
