@@ -27,16 +27,17 @@ use JsonValidator\UseCase\CheckKeyString;
 use JsonValidator\UseCase\CheckValueArray;
 use JsonValidator\UseCase\CheckValueInteger;
 use JsonValidator\UseCase\CheckValueString;
-use Math\DependencyInjectionManifest as MDI;
+
+use Math\MathDiManifest;
 
 use function DI\autowire;
 
-class DependencyInjectionManifest extends AbstractDependencyInjection
+class JsonValidatorDiManifest extends AbstractDependencyInjection
 {
     public static function getDependencies(): array
     {
         return array_merge(
-            MDI::getDependencies(),
+            MathDiManifest::getDependencies(),
             [
                 CheckKeyJsonObject::class => autowire(KeyJsonObjectChecker::class),
                 CheckKeyArray::class => autowire(KeyArrayChecker::class),

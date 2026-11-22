@@ -5,7 +5,7 @@
 declare(strict_types=1);
 
 use DI\ContainerBuilder;
-use JsonValidator\DependencyInjectionManifest;
+use JsonValidator\JsonValidatorDiManifest;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -13,6 +13,6 @@ $builder = new ContainerBuilder();
 
 $builder->useAutowiring(true);
 
-$builder->addDefinitions(DependencyInjectionManifest::getDependencies());
+$builder->addDefinitions(JsonValidatorDiManifest::getDependencies());
 
 $GLOBALS['diContainer'] = $builder->build();
